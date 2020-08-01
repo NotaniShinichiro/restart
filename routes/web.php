@@ -16,9 +16,12 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
-    Route::get('profile/create','Admin\ProfleController@add');
-    Route::get('profile/edit','Admin\ProfleController@edit');
     Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('news/create', 'Admin\NewsController@create'); # 追記
+    Route::get('profile/create','Admin\ProfleController@add');
+    Route::post('profile/create','Admin\ProfleController@create');
+    Route::get('profile/edit','Admin\ProfleController@edit');
+    Route::post('profile/edit','Admin\ProfleController@update');
 });
 
 Auth::routes();
