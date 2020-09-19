@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 // Illuminate\Requestは、Laravelに備え付けである。無条件でActionに渡る。$requestはRequestのインスタンス。
 use App\Http\Controllers\Controller;
 use App\News;
+use Carbon\Carbon;
+use App\History;
 
 class NewsController extends Controller
 {
@@ -98,6 +100,13 @@ public function update(Request $request)
       unset($news_form['_token']);
       // 該当するデータを上書きして保存する
       $news->fill($news_form)->save();
+      
+      $history = new History;
+      $history->news_id = $news->id;
+      $history->edited_at = Carbon::now();
+      $history->save();
+
+      
 
       return redirect('admin/news');
   }
